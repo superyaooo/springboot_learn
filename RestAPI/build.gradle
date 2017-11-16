@@ -1,6 +1,6 @@
 plugins {
 	id 'org.springframework.boot' version '1.5.8.RELEASE'
-	id 'com.moowork.node' version '1.1.1'
+	id 'com.moowork.node' version '1.2.0'
 }
 
 apply plugin: 'java'
@@ -29,6 +29,17 @@ dependencies {
 }
 
 node {
+	version = '8.9.1'
+	
+	npmVersion = '5.5.1'
+	
+	// Base URL for fetching node distributions (change if you have a mirror).
+	distBaseUrl = 'https://nodejs.org/dist'
+	
+	// If true, it will download node using above parameters.
+	// If false, it will try to use globally installed node.
+	download = true
+	
 	// set work dir for unpacking node
 	workDir = file("${project.buildDir}/nodejs")
 	
@@ -45,6 +56,5 @@ task webpack(type: NodeTask, dependsOn: 'npmInstall') {
 }
 
 processResources.dependsOn 'webpack'
-
 
 clean.delete << file('src/main/resources/static/built/bundle.js')
