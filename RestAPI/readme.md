@@ -3,4 +3,8 @@
 The original tutorial is a Maven project that uses <em>frontend-maven-plugin</em> to take care of webpack and all the node.js tools. 
 Since I prefer Gradle, I turned the tutorial project into a Gradle project. The build.gradle shows how to handle webpack and node.js tools in a Gradle project.
 
+<<<<<<< HEAD
 // TODO - need to figure out how to install webpack and generate bundle.js automatically via Gradle
+=======
+// TODO - node and npm now installs automatically; need to figure out webpack install error
+>>>>>>> 06dd30327acd427d6d1f478550540a2c8ad06719
