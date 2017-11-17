@@ -1,0 +1,60 @@
+plugins {
+	id 'org.springframework.boot' version '1.5.8.RELEASE'
+	id 'com.moowork.node' version '1.2.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.springdemo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
+	compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
+	runtime group: 'com.h2database', name: 'h2'
+
+	compileOnly group: 'org.projectlombok', name: 'lombok'
+
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}
+
+node {
+	version = '8.9.1'
+
+	npmVersion = '5.5.1'
+
+	// Base URL for fetching node distributions (change if you have a mirror).
+	distBaseUrl = 'https://nodejs.org/dist'
+
+	// If true, it will download node using above parameters.
+	// If false, it will try to use globally installed node.
+	download = true
+
+	// set work dir for unpacking node
+	workDir = file("${project.buildDir}/nodejs")
+	
+	// set work dir for NPM
+	npmWorkDir = file("${project.buildDir}/npm")
+
+	// set work dir where node_modules are located
+	nodeModulesDir = file("${project.projectDir}")
+}
+
+task webpack(type: NodeTask, dependsOn: 'npmInstall') {
+	script = project.file('node_modules/.bin/webpack')
+	args = ['--display-error-details']
+}
+
+processResources.dependsOn 'webpack'
+
+clean.delete << file('src/main/resources/static/built/bundle.js')
