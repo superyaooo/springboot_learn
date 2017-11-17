@@ -31,4 +31,4 @@ nbdist/
 
 ### Node & Webpack ###
 node_modules
-resources/static/built/
+built/
