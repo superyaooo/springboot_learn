@@ -28,3 +28,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Node & Webpack ###
+node_modules
+resources/static/built/
