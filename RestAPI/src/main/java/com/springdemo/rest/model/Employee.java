@@ -1,10 +1,13 @@
 package com.springdemo.rest.model;
 
-import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -15,8 +18,10 @@ public class Employee {
     private String lastName;
     private String description;
 
-    private Employee() {}
+    private @Version @JsonIgnore Long version;
 
+    private Employee() {}
+    
     public Employee(String firstName, String lastName, String description) {
         this.firstName = firstName;
         this.lastName = lastName;
