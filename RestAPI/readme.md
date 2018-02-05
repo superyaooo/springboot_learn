@@ -6,4 +6,4 @@ Since I prefer <strong>Gradle</strong>, I turned the tutorial project into a <st
 The current setup of <em>build.gradle</em> takes care of node.js tools and webpack automatically upon a gradle build. Node_modules and bundle.js are automatically generated. There is no need to manually install node, npm or webpack.
 
 
-* Somehow there is a webpack install error during gradle build on a Windows machine. I haven't found a fix for it yet. The build.gradle works perfectly on a Mac.
+* When run on a Windows machine, if webpack install error occurs during gradle build, use "on Windows" script under webpack task in build.gradle
