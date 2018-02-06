@@ -11,7 +11,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Autowired
     public DatabaseLoader(EmployeeRepository repository) {
-
         this.repository = repository;
     }
 
