@@ -1,6 +1,5 @@
 package com.springdemo.rest.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +8,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final EmployeeRepository repository;
 
-    @Autowired
     public DatabaseLoader(EmployeeRepository repository) {
         this.repository = repository;
     }
