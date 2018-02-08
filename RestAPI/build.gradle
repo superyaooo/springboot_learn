@@ -54,8 +54,8 @@ node {
 }
 
 task webpack(type: NodeTask, dependsOn: 'npmInstall') {
-	script = project.file('node_modules/.bin/webpack') // on non-Windows machine
-	//script = project.file('node_modules/webpack/bin/webpack') // on Windows
+	//script = project.file('node_modules/.bin/webpack') // on non-Windows machine
+	script = project.file('node_modules/webpack/bin/webpack') // on Windows
 	args = ['--display-error-details']
 }
 

@@ -35,4 +35,16 @@ public class Manager {
 		this.setPassword(password);
 		this.roles = roles;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String[] getRoles() {
+		return roles;
+	}
+
+	public String getPassword() {
+		return password;
+	}
 }
