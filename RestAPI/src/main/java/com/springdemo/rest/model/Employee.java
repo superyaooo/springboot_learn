@@ -51,4 +51,8 @@ public class Employee {
 	public void setManager(Manager manager) {
 		this.manager = manager;
 	}
+	
+	public Manager getManager() {
+		return manager;
+	}
 }
