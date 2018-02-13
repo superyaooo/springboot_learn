@@ -47,4 +47,8 @@ public class Employee {
 	public Long getId() {
 		return id;
 	}
+	
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
 }

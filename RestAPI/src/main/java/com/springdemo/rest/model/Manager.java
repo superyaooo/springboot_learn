@@ -28,7 +28,15 @@ public class Manager {
 		this.password = PASSWORD_ENCODER.encode(password);
 	}
 	
-	protected Manager() {}
+	public Manager() {}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setRoles(String... roles) {
+		this.roles = roles;
+	}
 	
 	public Manager(String name, String password, String... roles) {
 		this.name = name;
