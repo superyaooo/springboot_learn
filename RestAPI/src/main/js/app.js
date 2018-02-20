@@ -34,6 +34,21 @@ class App extends React.Component {
 					path: employeeCollection.entity._links.profile.href,
 					headers: {'Accept': 'application/schema+json'}
 				}).then(schema => {
+					// tag::json-schema-filter[]
+					/**
+					 * Filter unneeded JSON Schema properties, like uri references and
+					 * subtypes ($ref).
+					 */
+					Object.keys(schema.entity.properties).forEach(function (property) {
+						if(schema.entity.properties[property].hasOwnProperty('format') &&
+								schema.entity.properties[property].format === 'uri') {
+							delete schema.entity.properties[property];
+						}
+						else if(schema.entity.properties[property].hasOwnProperty('$ref')) {
+							delete schema.entity.properties[property];
+						}
+					});
+					
 					this.schema = schema.entity;
 					this.links = employeeCollection.entity._links;
 					return employeeCollection;
@@ -84,6 +99,9 @@ class App extends React.Component {
 		}).done(response => {
 			/* Let the websocket handler update the state */
 		}, response => {
+			if (response.status.code === 403) {
+				alert('ACCESS DENIED: You are not authorized to update ' + employee.entity._links.self.href);
+			}
 			if (response.status.code === 412) {
 				alert('DENIED: Unable to update ' + employee.entity._links.self.href + '. Your copy is stale.');
 			}
@@ -91,7 +109,14 @@ class App extends React.Component {
 	}
 
 	onDelete(employee) {
-		client({method: 'DELETE', path: employee.entity._links.self.href});
+		client({method: 'DELETE', path: employee.entity._links.self.href}
+		).done(response => {
+			/* Let the websocket handler update the UI */
+		}, response => {
+			if (response.status.code === 403) {
+				alert('ACCESS DENIED: You are not authorized to delete ' + employee.entity._links.self.href);
+			}
+		});
 	}
 
 	onNavigate(navUri) {
