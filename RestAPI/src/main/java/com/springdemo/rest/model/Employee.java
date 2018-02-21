@@ -23,7 +23,8 @@ public class Employee {
     
     private @ManyToOne Manager manager;
 
-    private Employee() {}
+    @SuppressWarnings("unused")
+	private Employee() {}
     
     public Employee(String firstName, String lastName, String description, Manager manager) {
         this.firstName = firstName;

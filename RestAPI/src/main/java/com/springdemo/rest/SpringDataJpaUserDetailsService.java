@@ -1,5 +1,6 @@
 package com.springdemo.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ public class SpringDataJpaUserDetailsService implements UserDetailsService {
 	
 	private final ManagerRepository repository;
 	
+	@Autowired
 	public SpringDataJpaUserDetailsService(ManagerRepository repository) {
 		this.repository = repository;
 	}
