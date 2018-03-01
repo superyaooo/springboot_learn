@@ -10,3 +10,7 @@ security:
       clientAuthenticationScheme: form
     resource:
       userInfoUri: https://graph.facebook.com/me
+server:
+  session:
+    cookie:
+      name: OAuth2Demo

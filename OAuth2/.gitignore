@@ -17,6 +17,9 @@ gradlew.bat
 *.iws
 *.iml
 *.ipr
+bin/
+out/
+
 
 ### NetBeans ###
 nbproject/private/
