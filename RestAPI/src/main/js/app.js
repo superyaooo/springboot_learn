@@ -313,25 +313,34 @@ class UpdateDialog extends React.Component {
 
 		var dialogId = "updateEmployee-" + this.props.employee.entity._links.self.href;
 
-		return (
-				<div>
-					<a href={"#" + dialogId}>Update</a>
+		var isManagerCorrect = this.props.employee.entity.manager.name == this.props.loggedInManager;
+		if (isManagerCorrect == false) {
+			return (
+					<div>
+						<a>Not your Employee</a>
+					</div>
+					)
+		}
+		else {
+			return (
+					<div>
+						<a href={"#" + dialogId}>Update</a>
 
-					<div id={dialogId} className="modalDialog">
-						<div>
-							<a href="#" title="Close" className="close">X</a>
+						<div id={dialogId} className="modalDialog">
+							<div>
+								<a href="#" title="Close" className="close">X</a>
 
-							<h2>Update an employee</h2>
+								<h2>Update an employee</h2>
 
-							<form>
-								{inputs}
-								<button onClick={this.handleSubmit}>Update</button>
-							</form>
+								<form>
+									{inputs}
+									<button onClick={this.handleSubmit}>Update</button>
+								</form>
+							</div>
 						</div>
 					</div>
-				</div>
-			)
-//		}
+				)
+		}
 		
 		
 	}
@@ -453,7 +462,8 @@ class Employee extends React.Component {
 				<td>
 					<UpdateDialog employee={this.props.employee}
 								  attributes={this.props.attributes}
-								  onUpdate={this.props.onUpdate}/>
+								  onUpdate={this.props.onUpdate}
+								  loggedInManager={this.props.loggedInManager}/>
 				</td>
 				<td>
 					<button onClick={this.handleDelete}>Delete</button>
