@@ -112,7 +112,7 @@ class App extends React.Component {
 				}
 			});
 		} else {
-			alert("ACCESS DENIED: You are not authorized to delete this employee.");
+			alert("ACCESS DENIED: You are not authorized to update this employee.");
 		}
 	}
 	// end::on-update[]
@@ -231,7 +231,8 @@ class App extends React.Component {
 							  onNavigate={this.onNavigate}
 							  onUpdate={this.onUpdate}
 							  onDelete={this.onDelete}
-							  updatePageSize={this.updatePageSize}/>
+							  updatePageSize={this.updatePageSize}
+							  loggedInManager={this.state.loggedInManager}/>
 			</div>
 		)
 	}
@@ -312,24 +313,36 @@ class UpdateDialog extends React.Component {
 
 		var dialogId = "updateEmployee-" + this.props.employee.entity._links.self.href;
 
-		return (
-			<div>
-				<a href={"#" + dialogId}>Update</a>
-
-				<div id={dialogId} className="modalDialog">
+		var isManagerCorrect = this.props.employee.entity.manager.name == this.props.loggedInManager;
+		if (isManagerCorrect == false) {
+			return (
 					<div>
-						<a href="#" title="Close" className="close">X</a>
-
-						<h2>Update an employee</h2>
-
-						<form>
-							{inputs}
-							<button onClick={this.handleSubmit}>Update</button>
-						</form>
+						<a>Not your Employee</a>
 					</div>
-				</div>
-			</div>
-		)
+					)
+		}
+		else {
+			return (
+					<div>
+						<a href={"#" + dialogId}>Update</a>
+
+						<div id={dialogId} className="modalDialog">
+							<div>
+								<a href="#" title="Close" className="close">X</a>
+
+								<h2>Update an employee</h2>
+
+								<form>
+									{inputs}
+									<button onClick={this.handleSubmit}>Update</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				)
+		}
+		
+		
 	}
 
 }
@@ -384,7 +397,8 @@ class EmployeeList extends React.Component {
 					  employee={employee}
 					  attributes={this.props.attributes}
 					  onUpdate={this.props.onUpdate}
-					  onDelete={this.props.onDelete}/>
+					  onDelete={this.props.onDelete}
+					  loggedInManager={this.props.loggedInManager}/>
 		);
 
 		var navLinks = [];
@@ -448,7 +462,8 @@ class Employee extends React.Component {
 				<td>
 					<UpdateDialog employee={this.props.employee}
 								  attributes={this.props.attributes}
-								  onUpdate={this.props.onUpdate}/>
+								  onUpdate={this.props.onUpdate}
+								  loggedInManager={this.props.loggedInManager}/>
 				</td>
 				<td>
 					<button onClick={this.handleDelete}>Delete</button>
