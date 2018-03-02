@@ -15,7 +15,7 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {employees: [], attributes: [], page: 1, pageSize: 2, links: {}};
+		this.state = {employees: [], attributes: [], page: 1, pageSize: 2, links: {}, loggedInManager: this.props.loggedInManager};
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.onCreate = this.onCreate.bind(this);
 		this.onUpdate = this.onUpdate.bind(this);
@@ -90,26 +90,30 @@ class App extends React.Component {
 
 	// tag::on-update[]
 	onUpdate(employee, updatedEmployee) {
-		client({
-			method: 'PUT',
-			path: employee.entity._links.self.href,
-			entity: updatedEmployee,
-			headers: {
-				'Content-Type': 'application/json',
-				'If-Match': employee.headers.Etag
-			}
-		}).done(response => {
-			/* Let the websocket handler update the state */
-		}, response => {
-			if (response.status.code === 403) {
-				alert('ACCESS DENIED: You are not authorized to update ' +
-					employee.entity._links.self.href);
-			}
-			if (response.status.code === 412) {
-				alert('DENIED: Unable to update ' + employee.entity._links.self.href +
-					'. Your copy is stale.');
-			}
-		});
+		if(employee.entity.manager.name == this.state.loggedInManager) {
+			client({
+				method: 'PUT',
+				path: employee.entity._links.self.href,
+				entity: updatedEmployee,
+				headers: {
+					'Content-Type': 'application/json',
+					'If-Match': employee.headers.Etag
+				}
+			}).done(response => {
+				/* Let the websocket handler update the state */
+			}, response => {
+				if (response.status.code === 403) {
+					alert('ACCESS DENIED: You are not authorized to update ' +
+						employee.entity._links.self.href);
+				}
+				if (response.status.code === 412) {
+					alert('DENIED: Unable to update ' + employee.entity._links.self.href +
+						'. Your copy is stale.');
+				}
+			});
+		} else {
+			alert("ACCESS DENIED: You are not authorized to delete this employee.");
+		}
 	}
 	// end::on-update[]
 
@@ -456,6 +460,6 @@ class Employee extends React.Component {
 // end::employee[]
 
 ReactDOM.render(
-	<App />,
+	<App loggedInManager={document.getElementById('managername').innerHTML } />,
 	document.getElementById('react')
 )
