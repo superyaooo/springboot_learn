@@ -47,7 +47,13 @@
         });
 
         $.get("/user", function(data){
-            $("#user").html(data.userAuthentication.details.name);
+            if(data.userAuthentication.details.name) {
+                $("#user").html(data.userAuthentication.details.name);  <!-- username via facebook is "name" -->
+            }
+            else {
+                $("#user").html(data.userAuthentication.details.login);   <!-- username via github is "login" -->
+            }
+
             $(".unauthenticated").hide();
             $(".authenticated").show();
         });
