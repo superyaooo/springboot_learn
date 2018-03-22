@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-public class HomeController {
-
-    @RequestMapping("/user")
-    public Principal user(Principal principal) {
-        return principal;
+public class ClientController
+{
+    @RequestMapping("/")
+    public String home(Principal user)
+    {
+        return "Hello " + user.getName();
     }
 }
